@@ -13,6 +13,22 @@ this file and include it in basic-server.js so that it actually works.
 **************************************************************/
 
 exports.requestHandler = function(request, response) {
+  if (request.method === 'GET') {
+    if (request.url === '/classes/messages') {
+      var statusCode = 200;
+    } else {
+      var statusCode = 404;
+    }
+  } 
+  if (request.method === 'POST') {
+    if (request.url === '/classes/messages') {
+      var statusCode = 201;
+    } else {
+      var statusCode = 404;
+    }
+  } 
+
+  console.log(request.url);
   // Request and Response come from node's http module.
   //
   // They include information about both the incoming request, such as
@@ -30,10 +46,10 @@ exports.requestHandler = function(request, response) {
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   // The outgoing status.
-  var statusCode = 200;
+  //var statusCode = 200;
 
   // See the note below about CORS headers.
-  // var headers = defaultCorsHeaders;
+  //var headers = defaultCorsHeaders;
 
   // Tell the client we are sending them plain text.
   //
@@ -52,7 +68,7 @@ exports.requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end('Hello, World!');
+  response.end(JSON.stringify({results: []}));
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
